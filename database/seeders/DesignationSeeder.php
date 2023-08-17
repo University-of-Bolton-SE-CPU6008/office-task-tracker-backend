@@ -14,9 +14,17 @@ class DesignationSeeder extends Seeder
     public function run()
     {
         DB::table('designations')->insert([
-            ['designation_name' => 'QA'],
-            ['designation_name' => 'Developer'],
-            ['designation_name' => 'BA']
+            ['designation_name' => 'Mobile Developer'],
+            ['designation_name' => 'QA Engineer'],
+            ['designation_name' => 'Project Manager'],
+            ['designation_name' => 'Business Analyst'],
+            ['designation_name' => 'UI / UX Engineer'],
+            ['designation_name' => 'Frontend Web Developer'],
+            ['designation_name' => 'Backend Developer'],
+            ['designation_name' => 'Supervisor'],
+            ['designation_name' => 'Full Stack Developer'],
+            ['designation_name' => 'Project Manager'],
+            ['designation_name' => 'Sales Manager']
 
         ]);
     }
