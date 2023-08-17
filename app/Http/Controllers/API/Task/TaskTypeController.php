@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API\Task;
 
 use App\Http\Controllers\Controller;
-use App\Models\TaskType;
+use App\Models\Task\TaskType;
 use App\Repositories\Task\Interface\TaskTypeRepositoryInterface;
-use App\Repositories\User\Interface\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 class TaskTypeController extends Controller

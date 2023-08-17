@@ -8,7 +8,7 @@ use App\Http\Controllers\API\Designation\DesignationController;
 use App\Http\Controllers\API\Project\ProjectController;
 use App\Http\Controllers\API\Employee\EmployeeController;
 use App\Http\Controllers\API\User\UserController;
-
+use App\Http\Controllers\API\Task\TaskController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,6 +27,12 @@ Route::get('/confirm-email/{user_id}/{key}', [AuthController::class, 'confirmMai
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::post('/task-type/get-all', [TaskTypeController::class, 'index']);
+
+        Route::post('/task/create', [TaskController::class, 'store']);
+        Route::post('/task/get-all', [TaskController::class, 'index']);
+        Route::get('/task/{id}', [TaskController::class, 'findById']);
+        Route::get('/reports', [TaskController::class, 'reports']);
+
 
         Route::post('/designation/get-all', [DesignationController::class, 'index']);
 

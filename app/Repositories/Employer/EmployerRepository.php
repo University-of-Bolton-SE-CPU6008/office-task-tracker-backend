@@ -6,11 +6,13 @@ use App\Helpers\Helper;
 use App\Http\Resources\Employee\EmployeeCollection;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Models\Employee\Employee;
+use App\Models\Project\Project;
 use App\Models\User\User;
 use App\Models\User\UserLevel;
 use App\Repositories\Employer\Interface\EmployerRepositoryInterface;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EmployerRepository implements EmployerRepositoryInterface
 {
@@ -18,23 +20,29 @@ class EmployerRepository implements EmployerRepositoryInterface
 
     public function all($request)
     {
+        if(Auth::user()->user_level_id == 1) {
 
-        if($request->input('all', '') == 1) {
-            $employer_list = Employee::all();
-        } else {
-            $employer_list = Employee::orderBy('created_at', 'desc')->paginate(10);
+            if ($request->input('all', '') == 1) {
+                $employer_list = Employee::all();
+            } else {
+                $employer_list = Employee::orderBy('created_at', 'desc')->paginate(10);
+            }
+        }else{
+            return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
         }
-
         if (count($employer_list) > 0) {
             return new EmployeeCollection($employer_list);
         } else {
-            return Helper::success(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+            return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
         }
     }
     public function findById($id)
     {
-
-        $employer = Employee::find($id);
+        if(Auth::user()->user_level_id == 1) {
+            $employer = Employee::find($id);
+        }else{
+            return Helper::success(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+        }
 
         if ($employer) {
             return new EmployeeResource($employer);
@@ -44,6 +52,10 @@ class EmployerRepository implements EmployerRepositoryInterface
     }
     public function store($request)
     {
+        $project = Project::find($request->project_id);
+        if(!$project){
+            return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+        }
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
