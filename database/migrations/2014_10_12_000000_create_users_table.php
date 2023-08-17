@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('state');
-            $table->string('intern_period');
+            $table->boolean('state')->default(true);
             $table->string('user_role');
+            $table->unsignedBigInteger('user_level_id')->nullable();
+            $table->foreign('user_level_id')->references('id')->on('user_levels');
             $table->rememberToken();
             $table->timestamps();
         });
