@@ -4,7 +4,7 @@ namespace App\Repositories\Task;
 
 use App\Helpers\Helper;
 use App\Http\Resources\Task\TaskTypeCollection;
-use App\Models\TaskType;
+use App\Models\Task\TaskType;
 use App\Repositories\Task\Interface\TaskTypeRepositoryInterface;
 use Illuminate\Http\Response;
 

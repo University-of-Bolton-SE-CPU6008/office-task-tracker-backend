@@ -76,7 +76,7 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
-        if ($user->state !="active") {
+        if ($user->state != true) {
             return response()->json([
                 'message' => 'user_blocked',
                 'status_code' => 401
