@@ -9,5 +9,6 @@ interface EmployerRepositoryInterface
     public function store($request);
     public function update($request);
     public function statusUpdate($request);
+    public function newProjectInvolve($request);
 
 }

@@ -38,11 +38,7 @@ class EmployerRepository implements EmployerRepositoryInterface
     }
     public function findById($id)
     {
-        if(Auth::user()->user_level_id == 1) {
-            $employer = Employee::find($id);
-        }else{
-            return Helper::success(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
-        }
+        $employer = Employee::find($id);
 
         if ($employer) {
             return new EmployeeResource($employer);
@@ -87,6 +83,17 @@ class EmployerRepository implements EmployerRepositoryInterface
         }
         return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
     }
+
+    public function newProjectInvolve($request){
+        $employer = Employee::find($request->employer_id);
+        if($employer){
+            $employer->projects()->sync($request->project_id);
+            return new EmployeeResource($employer);
+        }else{
+            return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+        }
+
+    }
     public function update($request)
     {
 //            $employer = Employee::find($request->id);
@@ -109,7 +116,6 @@ class EmployerRepository implements EmployerRepositoryInterface
 //
 //        return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
     }
-
 
     public function statusUpdate($request)
     {

@@ -103,7 +103,18 @@ class EmployeeController extends Controller
         return $this->employerRepository->statusUpdate($request);
     }
 
-    /**
+    public function involve(Request $request)
+    {
+        $request->validate([
+            'employer_id' => 'required',
+            'project_id'=>'required'
+
+        ]);
+        return $this->employerRepository->newProjectInvolve($request);
+
+    }
+
+        /**
      * Remove the specified resource from storage.
      */
     public function destroy(Employee $employee)

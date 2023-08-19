@@ -97,5 +97,25 @@ class ProductRepository implements ProductRepositoryInterface
             return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
         }
     }
+    public function update($request)
+    {
+        $project = Project::find($request->id);
+        $project->name = $request->name;
+        $project->status = $request->status;
+        if ($project->save()) {
+
+            activity('project_update')
+                ->performedOn($project)
+                ->causedBy(auth()->user())
+                ->withProperties(['name' => $project->name])
+                ->log('created');
+
+            return new ProjectResource($project);
+        } else {
+            return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+        }
+    }
+
+
 
 }

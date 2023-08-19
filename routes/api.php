@@ -40,8 +40,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/project/get-all', [ProjectController::class, 'index']);
         Route::get('/project/{id}', [ProjectController::class, 'findById']);
         Route::get('/all-active-projects', [ProjectController::class, 'allActiveProjects']);
+        Route::put('/project/update', [ProjectController::class, 'update']);
+
 
         Route::post('/employee/create', [EmployeeController::class, 'store']);
+        Route::post('/involve', [EmployeeController::class, 'involve']);
+
         Route::post('/employee/get-all', [EmployeeController::class, 'index']);
         Route::put('/employee/status-update', [EmployeeController::class, 'statusUpdate']);
         Route::get('/employee/{id}', [EmployeeController::class, 'findById']);
