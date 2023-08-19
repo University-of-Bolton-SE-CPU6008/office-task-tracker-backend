@@ -65,11 +65,7 @@ class UserRepository implements UserRepositoryInterface
     }
     public function findById($id)
     {
-        if(Auth::user()->user_level_id == 1) {
-            $user = User::find($id);
-        }else{
-            return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
-        }
+        $user = User::find($id);
         if ($user) {
             return new UserResource($user);
         } else {
