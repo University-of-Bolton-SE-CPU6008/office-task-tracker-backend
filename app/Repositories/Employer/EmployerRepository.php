@@ -87,4 +87,48 @@ class EmployerRepository implements EmployerRepositoryInterface
         }
         return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
     }
+    public function update($request)
+    {
+//            $employer = Employee::find($request->id);
+//            $employer->designation_id = $request->designation_id;
+//            $employer->status = $request->state;
+//
+//            if ($employer->save()) {
+//                $employer->projects()->sync($request->project_id);
+//
+//                activity('employer')
+//                    ->performedOn($employer)
+//                    ->causedBy(auth()->user())
+//                    ->withProperties(['name' => $request->name])
+//                    ->log('created');
+//
+//                return new EmployeeResource($employer);
+//            } else {
+//                return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+//            }
+//
+//        return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+    }
+
+
+    public function statusUpdate($request)
+    {
+        $employer = Employee::find($request->id);
+        $employer->status = $request->status;
+
+        if ($employer->save()) {
+
+            activity('employer_update')
+                ->performedOn($employer)
+                ->causedBy(auth()->user())
+                ->withProperties(['name' => $request->name])
+                ->log('created');
+
+            return new EmployeeResource($employer);
+        } else {
+            return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+        }
+    }
+
+
 }

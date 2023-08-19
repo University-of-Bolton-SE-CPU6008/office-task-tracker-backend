@@ -48,6 +48,17 @@ class ProductRepository implements ProductRepositoryInterface
             return Helper::success(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
         }
     }
+
+    public function allActiveProjectWithoutInvolving()
+    {
+        $project_list = Project::where('status',1)->get();
+        if ($project_list) {
+            return new ProjectCollection($project_list);
+        } else {
+            return Helper::success(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
+        }
+    }
+
     public function findById($id)
     {
         $employee = Employee::where('user_id',Auth::user()->id)->first();

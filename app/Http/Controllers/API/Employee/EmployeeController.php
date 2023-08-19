@@ -77,9 +77,30 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required|string',
+            'project_id'=>'required',
+            'designation_id'=>'required',
+            'state'=>'required'
+
+        ]);
+        return $this->employerRepository->update($request);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function statusUpdate(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'status'=>'required'
+
+        ]);
+        return $this->employerRepository->statusUpdate($request);
     }
 
     /**
