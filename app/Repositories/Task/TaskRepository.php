@@ -39,21 +39,22 @@ class TaskRepository implements TaskRepositoryInterface
 
     public function report()
     {
+
+
         $employee = Employee::where('user_id',Auth::user()->id)->first();
         if(Auth::user()->user_level_id == 1){
-            $task_list = Task::orderBy('date', 'desc')
-                ->get()
-                ->groupBy(function ($task) {
-                    return $task->date;
-                });
-        }else{
-            $task_list = Task::where('employee_id', $employee->id)->select("date","number_of_hour")
+            $task_list = Task::selectRaw("date, SUM(number_of_hour) as num_of_hours")
+                ->groupBy('date')
                 ->orderBy('date', 'desc')
-                ->get()
-                ->groupBy(function ($task) {
-                    return $task->date;
-                });
+                ->get();
 
+
+        }else{
+            $task_list = Task::where('employee_id', $employee->id)
+                ->selectRaw("date, SUM(number_of_hour) as num_of_hours")
+                ->groupBy('date')
+                ->orderBy('date', 'desc')
+                ->get();
         }
         if ($task_list) {
             return $task_list;

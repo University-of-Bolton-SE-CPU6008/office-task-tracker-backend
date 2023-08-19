@@ -39,12 +39,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/project/create', [ProjectController::class, 'store']);
         Route::post('/project/get-all', [ProjectController::class, 'index']);
         Route::get('/project/{id}', [ProjectController::class, 'findById']);
+        Route::get('/all-active-projects', [ProjectController::class, 'allActiveProjects']);
 
         Route::post('/employee/create', [EmployeeController::class, 'store']);
         Route::post('/employee/get-all', [EmployeeController::class, 'index']);
+        Route::put('/employee/status-update', [EmployeeController::class, 'statusUpdate']);
         Route::get('/employee/{id}', [EmployeeController::class, 'findById']);
 
+
         Route::post('/user/get-all', [UserController::class, 'index']);
+        Route::post('/user/change-password', [UserController::class, 'changePassword']);
         Route::get('/user/{id}', [UserController::class, 'findById']);
 
         Route::post('/logout', [AuthController::class, 'logout']);

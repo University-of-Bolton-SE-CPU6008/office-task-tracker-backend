@@ -29,4 +29,13 @@ class UserController extends Controller
     public function findById($id){
         return $this->userRepository->findById($id);
     }
+
+    public function changePassword(Request $request){
+        $request->validate([
+            'user_id' => 'required',
+            'old_password' => 'required|string',
+            'password' => 'required|string|confirmed'
+        ]);
+        return $this->userRepository->changePassword($request);
+    }
 }
