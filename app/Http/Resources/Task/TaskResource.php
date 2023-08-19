@@ -32,7 +32,7 @@ class TaskResource extends JsonResource
             'user' => User::find($employee->user_id),
             'employee'=> $employee,
             "designation_name" => Designation::select('designation_name')->find($employee->designation_id),
-        'task_type'=> TaskType::find($this->task_type_id),
+            'task_type'=> TaskType::find($this->task_type_id),
             'project' => Project::find($this->project_id)
         ];
     }
