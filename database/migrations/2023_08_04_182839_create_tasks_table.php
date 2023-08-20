@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('task_detail')->nullable();
             $table->string('date');
-            $table->integer('number_of_hour');
+            $table->float('number_of_hour');
             $table->text('comment')->nullable();
             $table->foreign('task_type_id')->references('id')->on('task_types');
             $table->foreign('employee_id')->references('id')->on('employees');
