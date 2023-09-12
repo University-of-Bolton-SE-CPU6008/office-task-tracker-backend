@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Http\Resources\Employee\EmployeeCollection;
 use App\Http\Resources\Employee\EmployeeResource;
 use App\Models\Employee\Employee;
+use App\Models\Employee\EmployeeProject;
 use App\Models\Project\Project;
 use App\Models\User\User;
 use App\Models\User\UserLevel;
@@ -87,7 +88,11 @@ class EmployerRepository implements EmployerRepositoryInterface
     public function newProjectInvolve($request){
         $employer = Employee::find($request->employer_id);
         if($employer){
-            $employer->projects()->sync($request->project_id);
+            $employeeProject = new EmployeeProject();
+            $employeeProject->employee_id = $request->employer_id;
+            $employeeProject->project_id = $request->project_id;
+            $employeeProject->save();
+//            $employer->projects()->sync($request->project_id);
             return new EmployeeResource($employer);
         }else{
             return Helper::error(Response::$statusTexts[Response::HTTP_NO_CONTENT], Response::HTTP_NO_CONTENT);
